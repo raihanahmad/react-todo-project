@@ -1,32 +1,73 @@
 import React, { Component } from "react";
+import Header from "./component/layout/Header";
 import Todos from "./component/Todos";
+import AddTodo from "./component/AddTodo";
+import { v1 as uuid } from "uuid";
+
 import "./App.css";
 
 class App extends Component {
   state = {
     todos: [
       {
-        id: 1,
+        id: uuid(),
         title: "Meeting with boss",
         completed: false,
       },
       {
-        id: 2,
+        id: uuid(),
         title: "Take out the trash",
         completed: false,
       },
       {
-        id: 3,
+        id: uuid(),
         title: "Pick up kids from school",
         completed: false,
       },
     ],
   };
 
+  // Toggle complete
+  markComplete = (id) => {
+    this.setState({
+      todos: this.state.todos.map((todo) => {
+        if (todo.id === id) {
+          todo.completed = !todo.completed;
+        }
+
+        return todo;
+      }),
+    });
+  };
+
+  // Delete Todo
+  delTodo = (id) => {
+    this.setState({
+      todos: [...this.state.todos.filter((todo) => todo.id !== id)],
+    });
+  };
+
+  // Add Todo
+  addTodo = (title) => {
+    // console.log(title);
+    const newTodo = {
+      id: uuid(),
+      title,
+      completed: false,
+    };
+    this.setState({ todos: [...this.state.todos, newTodo] });
+  };
+
   render() {
     return (
       <div className="App">
-        <Todos todos={this.state.todos} />
+        <Header />
+        <AddTodo addTodo={this.addTodo} />
+        <Todos
+          todos={this.state.todos}
+          markComplete={this.markComplete}
+          delTodo={this.delTodo}
+        />
       </div>
     );
   }
