@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Header from "./component/layout/Header";
+import Footer from "./component/layout/Footer";
 import Todos from "./component/Todos";
 import AddTodo from "./component/AddTodo";
 import { v1 as uuid } from "uuid";
@@ -68,6 +69,7 @@ class App extends Component {
           markComplete={this.markComplete}
           delTodo={this.delTodo}
         />
+        <Footer />
       </div>
     );
   }
